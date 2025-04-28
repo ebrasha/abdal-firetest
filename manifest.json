@@ -1,0 +1,32 @@
+{
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "abdal-fire-test@abdal.seurity.group"
+    }
+  },
+  "author": "Ebrahim Shafiei (EbraSha)",
+  "description": "The Abdal FireTest extension is an advanced version of HackBar, which is programmed and supported by the Abdal security team, led by Ebrahim Shafiei (EbraSha).",
+  "manifest_version": 2,
+  "name": "Abdal FireTest",
+  "version": "1.60",
+  "homepage_url": "https://github.com/ebrasha/abdal-firetest",
+  "icons": {
+    "48": "icons/icon.png"
+  },
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "tabs",
+    "activeTab",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>",
+    "storage"
+  ],
+  "devtools_page": "theme/abdal-firetest.html",
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  }
+}

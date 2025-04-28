@@ -1,0 +1,21 @@
+/*
+ **********************************************************************
+ * -------------------------------------------------------------------
+ * Project Name : Abdal FireTest
+ * File Name    : fonts.css
+ * Author       : Ebrahim Shafiei (EbraSha)
+ * Email        : Prof.Shafiei@Gmail.com
+ * Created On   : 2023-08-01 13:48:47
+ * Description  : Google Fonts import for CyberPunk theme
+ * -------------------------------------------------------------------
+ *
+ * "Coding is an engaging and beloved hobby for me. I passionately and insatiably pursue knowledge in cybersecurity and programming."
+ * – Ebrahim Shafiei
+ *
+ **********************************************************************
+ */
+
+/* Import fonts needed for CyberPunk theme */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600;700&display=swap'); 

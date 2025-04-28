@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Abdal FireTest - CyberPunk Edition</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome-all.min.css"/>
+	<link rel="stylesheet" href="fonts.css"/>
+	<link rel="stylesheet" href="css/cyberpunk-style.css"/>
+	<style>
+		/* Notification styles */
+		.notification {
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			padding: 10px 20px;
+			border-radius: 5px;
+			color: white;
+			font-weight: bold;
+			opacity: 0;
+			transform: translateY(20px);
+			transition: opacity 0.3s, transform 0.3s;
+			z-index: 9999;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+			text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+			border-left: 4px solid rgba(255, 255, 255, 0.5);
+		}
+		
+		.notification.show {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		
+		.notification.success {
+			background-color: var(--neon-green);
+			box-shadow: 0 0 15px var(--neon-green);
+		}
+		
+		.notification.info {
+			background-color: var(--neon-blue);
+			box-shadow: 0 0 15px var(--neon-blue);
+		}
+		
+		.notification.warning {
+			background-color: var(--neon-yellow);
+			box-shadow: 0 0 15px var(--neon-yellow);
+		}
+		
+		.notification.error {
+			background-color: var(--neon-pink);
+			box-shadow: 0 0 15px var(--neon-pink);
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fluid" style="padding-top: 10px;">
+		<!-- Cyberpunk Header/Logo -->
+		<div class="row">
+			<div class="col-md-12 text-center" style="margin-bottom: 15px;">
+				<div class="cyberpunk-logo">
+					<h1 class="neon-text" style="font-family: 'Orbitron', sans-serif; font-weight: 800; letter-spacing: 2px; color: var(--neon-blue); text-transform: uppercase; margin: 0;">
+						<span style="color: var(--neon-pink);">A</span>bdal 
+						<span style="color: var(--neon-green);">F</span>ire
+						<span style="color: var(--neon-yellow);">T</span>est
+					</h1>
+					<div class="cyberpunk-subtitle" style="font-family: 'Rajdhani', sans-serif; color: var(--neon-green); letter-spacing: 3px; font-size: 14px; margin-top: 5px;">
+						CYBERPUNK EDITION By Ebrahim Shafiei (EbraSha)_<span class="blink">|</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<nav class="navbar navbar-default">
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav" tabindex="-1" id="menu_btn">
+					<li class="dropdown">
+						<a href="#" tabindex="-1" class="dropdown-toggle neon-text" data-toggle="dropdown" role="button"
+						   aria-haspopup="true" aria-expanded="false" style="color: var(--neon-green);">Wordpress <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" id='wordpress-users'><i><img src="img/wp.png"></i> Enumerate WordPress Users</a></li>
+							<li><a href="#" id='wp-config-check'><i class="fa fa-file-code"></i> WP Config Leak Check</a></li>
+							<li><a href="#" id='wp-version-detect'><i class="fa fa-search"></i> WordPress Version Detection</a></li>
+							<li><a href="#" id='wp-dir-listing'><i class="fa fa-folder-open"></i> Directory Listing Detection</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" tabindex="-1" class="dropdown-toggle neon-text" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false" style="color: var(--neon-blue);">Encryption <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" id='md5'><i class="fa fa-lock"></i> MD5</a></li>
+							<li><a href="#" id='sha1'><i class="fa fa-lock"></i> SHA1</a></li>
+							<li><a href="#" id='sha256'><i class="fa fa-lock"></i> SHA256</a></li>
+							<li><a href="#" id='sha3'><i class="fa fa-lock"></i> SHA3</a></li>
+							<li><a href="#" id='sha224'><i class="fa fa-lock"></i> SHA224</a></li>
+							<li><a href="#" id='sha384'><i class="fa fa-lock"></i> SHA384</a></li>
+							<li><a href="#" id='sha512'><i class="fa fa-lock"></i> SHA512</a></li>
+							<li><a href="#" id='rot13'><i class="fa fa-unlock"></i> ROT13</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" tabindex="-1" class="dropdown-toggle neon-text" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false" style="color: var(--neon-pink);">Encoding <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" id='base64_encode'><i class="fa fa-exchange-alt"></i> Base64 Encode</a></li>
+							<li><a href="#" id='base64_decode'><i class="fa fa-history"></i> Base64 Decode</a></li>
+							<li><a href="#" id='url_encode'><i class="fa fa-link"></i> URL Encode</a></li>
+							<li><a href="#" id='url_decode'><i class="fa fa-unlink"></i> URL Decode</a></li>
+							<li><a href="#" id='hex_encode'><i class="fa fa-exchange-alt"></i> Hex Encode</a></li>
+							<li><a href="#" id='hex_decode'><i class="fa fa-history"></i> Hex Decode</a></li>
+						</ul>
+					</li>
+
+					<li class="dropdown">
+						<a href="#" tabindex="-1" class="dropdown-toggle neon-text" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false" style="color: var(--neon-yellow);">SQL <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" id='sql_error_based'><i class="fa fa-bug"></i> Error-Based Injection</a></li>
+							<li><a href="#" id='sql_union_based'><i class="fa fa-code-branch"></i> Union-Based Injection</a></li>
+							<li><a href="#" id='sql_boolean_based'><i class="fa fa-toggle-on"></i> Boolean-Based Blind Injection</a></li>
+							<li><a href="#" id='sql_time_based'><i class="fa fa-clock"></i> Time-Based Blind Injection</a></li>
+							<li><a href="#" id='sql_out_of_band'><i class="fa fa-external-link-alt"></i> Out-Of-Band Injection</a></li>
+						</ul>
+					</li>
+
+					<li class="dropdown">
+						<a href="#" tabindex="-1" class="dropdown-toggle neon-text" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false" style="color: var(--neon-purple);">XSS <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" id='xss_string_from_charcode'><i class="fab fa-js-square"></i> String.fromCharCode</a>
+							</li>
+							<li><a href="#" id='xss_html_characters'><i class="fab fa-html5"></i> HTML Characters</a></li>
+							<li><a href="#" id='xss_alert'><i class="fa fa-exclamation-triangle"></i> XSS Alert</a></li>
+							<li><a href="#" id='xss_image'><i class="fa fa-image"></i> Image XSS</a></li>
+							<li><a href="#" id='xss_dom_based'><i class="fa fa-sitemap"></i> DOM-based XSS</a></li>
+							<li><a href="#" id='xss_svg'><i class="far fa-file-image"></i> SVG XSS</a></li>
+							<li><a href="#" id='xss_css'><i class="fab fa-css3"></i> CSS XSS</a></li>
+							<li><a href="#" id='xss_iframe'><i class="fa fa-window-maximize"></i> Iframe XSS</a></li>
+							<li><a href="#" id='xss_polyglot'><i class="fa fa-code-branch"></i> Polyglot XSS</a></li>
+							<li><a href="#" id='xss_event_handler'><i class="fa fa-mouse-pointer"></i> Event Handler XSS</a></li>
+							<li><a href="#" id='xss_angular'><i class="fab fa-angular"></i> AngularJS XSS</a></li>
+							<li><a href="#" id='xss_jsfuck'><i class="fa fa-mask"></i> JSFuck XSS</a></li>
+							<li><a href="#" id='xss_stored'><i class="fa fa-database"></i> Stored XSS</a></li>
+							<li><a href="#" id='xss_reflected'><i class="fa fa-reply"></i> Reflected XSS</a></li>
+							<li><a href="#" id='xss_mutation'><i class="fa fa-dna"></i> Mutation XSS</a></li>
+							<li><a href="#" id='xss_csp_bypass'><i class="fa fa-unlock-alt"></i> CSP Bypass</a></li>
+						</ul>
+					</li>
+
+					<li class="dropdown" id="lfi">
+						<a href="#" tabindex="-1" class="dropdown-toggle neon-text" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false" style="color: var(--cyberpunk-blue);">LFI <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" id="lfi_basic_payload"><i class="fa fa-file"></i> Basic LFI Payload</a></li>
+							<li><a href="#" id="lfi_null_byte"><i class="fa fa-bug"></i> LFI with Null Byte Injection</a></li>
+							<li><a href="#" id="lfi_passwd_file"><i class="fa fa-users"></i> LFI for /etc/passwd File Inclusion</a></li>
+							<li><a href="#" id="lfi_directory_traversal"><i class="fa fa-folder-open"></i> LFI with Directory Traversal (../../../../etc/passwd)</a></li>
+							<li><a href="#" id="lfi_php_wrapper"><i class="fa fa-filter"></i> LFI with Wrappers (php://filter)</a></li>
+						</ul>
+					</li>
+
+					<li class="dropdown">
+						<a href="#" tabindex="-1" class="dropdown-toggle neon-text" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false" style="color: var(--cyberpunk-pink);">XXE <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" id="xxe_lfi">XXE LFI Test</a></li>
+							<li><a href="#" id="xxe_blind">XXE Blind LFI test</a></li>
+							<li><a href="#" id="xxe_load_resource">XXE Access Control bypass</a></li>
+							<li><a href="#" id="xxe_ssrf">XXE SSRF Test</a></li>
+							<li><a href="#" id="xxe_rce">XXE RCE</a></li>
+							<li><a href="#" id="xxe_xee_local">XXE XEE DOS (LOCAL)</a></li>
+							<li><a href="#" id="xxe_xee_remove">XXE XEE DOS (REMOTE)</a></li>
+							<li><a href="#" id="xxe_utf7">XXE UTF-7</a></li>
+						</ul>
+					</li>
+
+					<li class="dropdown">
+						<a href="#" tabindex="-1" class="dropdown-toggle neon-text" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false" style="color: var(--neon-green);">Exposure Check <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" id='exposure_database'><i class="fa fa-database"></i> Database Files</a></li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right" style="padding-right: 5px">
+					<p class="navbar-text neon-text">
+						<a href="https://t.me/ProfShafiei" target="_blank">Contact Us</a>
+						<span style="color: var(--neon-blue);">Abdal FireTest</span>
+					</p>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</nav>
+		<div class="row cyberpunk-border">
+			<div class="col-md-2 col-lg-1 col-xs-3 col-sm-3">
+				<button class="btn btn-sm btn-block btn-primary cyberpunk-button" id="load_url" style="min-width: 100px;">
+                    <span class="btn-text"><i class="fa fa-hand-holding fa-lg"></i> Load URL</span>
+                    <span class="btn-glitch"></span>
+				</button>
+                <button class="btn btn-sm btn-block btn-info cyberpunk-button" id="manual_url" style="min-width: 100px; margin-top: 5px;">
+                    <span class="btn-text"><i class="fa fa-keyboard fa-lg"></i> Manual URL</span>
+                    <span class="btn-glitch"></span>
+				</button>
+				<button class="btn btn-sm btn-block btn-primary cyberpunk-button" id="split_url" style="min-width: 100px; margin-top: 5px;">
+                    <span class="btn-text"><i class="fa fa-link fa-lg"></i> Split URL</span>
+                    <span class="btn-glitch"></span>
+				</button>
+				<button class="btn btn-sm btn-danger cyberpunk-button" id="execute" style="min-width: 100px; margin-top: 5px;">
+                    <span class="btn-text"><i class="far fa-play-circle fa-lg"></i> Execute</span>
+                    <span class="btn-glitch"></span>
+				</button>
+			</div>
+			<div class="col-md-10 col-lg-11 col-xs-9 col-sm-9">
+				<div class="row">
+					<div class="col-md-6 col-xs-12 col-sm-12">
+						<div class="form-group">
+							<textarea rows="99" style="height: 99px" id="url_field" class="form-control cyberpunk-input" placeholder="Enter URL or payload here..."></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="checkbox">
+						<label class="checkbox-inline">
+							<input type="checkbox" id="enable_post_btn"/> 
+							<span class="checkmark"></span>
+							Post data
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" id="enable_referer_btn"/> 
+							<span class="checkmark"></span>
+							Referer
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" id="enable_user_agent_btn"/> 
+							<span class="checkmark"></span>
+							User Agent
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" id="enable_cookie_btn"/> 
+							<span class="checkmark"></span>
+							Cookies
+						</label>
+						<label>
+							<button type="button" class="btn btn-default btn-xs cyberpunk-button" id="add_header">
+								<span class="btn-text">Add Header</span>
+								<span class="btn-glitch"></span>
+							</button>
+						</label>
+						<label class="checkbox-inline">
+							<button type="button" class="btn btn-default btn-xs cyberpunk-button" id="clear_all">
+								<span class="btn-text">Clear All</span>
+								<span class="btn-glitch"></span>
+							</button>
+						</label>
+						<label class="checkbox-inline">
+							<button type="button" class="btn btn-warning btn-xs cyberpunk-button" id="reset_payload">
+								<span class="btn-text"><i class="fa fa-undo"></i> Reset Payload</span>
+								<span class="btn-glitch"></span>
+							</button>
+						</label>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-1" id="data_label_block">
+			</div>
+			<div class="col-lg-6 block">
+				<div class="row form-group">
+					<div class="col-xs-12 input-group">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group">
+							<textarea id="post_data_field" class="form-control"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-5" id="headers">
+				<div class="form-group block">
+					<div class="input-group">
+						<div class="input-group-addon"><strong>H</strong></div>
+						<input type="text" class="form-control" name="header_field" disabled placeholder="Custom: Header">
+					</div>
+				</div>
+
+				<div class="form-group block">
+					<div class="input-group">
+						<div class="input-group-addon"><strong>R</strong></div>
+						<input type="text" class="form-control" id="referer_field" placeholder="Referer">
+					</div>
+				</div>
+
+				<div class="form-group block">
+					<div class="input-group">
+						<div class="input-group-addon"><strong>U</strong></div>
+						<input type="text" class="form-control" id="user_agent_field" placeholder="User Agent">
+					</div>
+				</div>
+
+				<div class="form-group block">
+					<div class="input-group">
+						<div class="input-group-addon"><strong>C</strong></div>
+						<input type="text" class="form-control" id="cookie_field" placeholder="Cookies">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal -->
+		<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">Please enter some text</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Please enter some text">
+						</div>
+						<button class="btn btn-primary">OK</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/jquery-3.4.0.slim.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/Encrypt.js"></script>
+	<script src="js/XSS.js"></script>
+	<script src="js/SQL.js"></script>
+	<script src="js/LFI.js"></script>
+	<script src="js/abdal-firetest-panel.js"></script>
+	<script src="js/crypto-js.min.js"></script>
+	<script src="js/wp-security-tools.js"></script>
+	
+	<!-- Add cyberpunk theme js -->
+	<script>
+		// Add cyberpunk theme effects
+		document.addEventListener('DOMContentLoaded', function() {
+			// Add glitch effect to buttons on hover
+			const buttons = document.querySelectorAll('.btn');
+			buttons.forEach(button => {
+				button.addEventListener('mouseover', function() {
+					this.classList.add('neon-text');
+					const glitchElement = this.querySelector('.btn-glitch');
+					if (glitchElement) {
+						glitchElement.style.opacity = '1';
+					}
+				});
+				button.addEventListener('mouseout', function() {
+					this.classList.remove('neon-text');
+					const glitchElement = this.querySelector('.btn-glitch');
+					if (glitchElement) {
+						glitchElement.style.opacity = '0';
+					}
+				});
+			});
+			
+			// Add randomized slight color shift to neon elements for dynamic effect
+			setInterval(() => {
+				const neonElements = document.querySelectorAll('.neon-text');
+				neonElements.forEach(element => {
+					const currentColor = window.getComputedStyle(element).color;
+					if (Math.random() > 0.7) {
+						element.style.opacity = '0.9';
+						setTimeout(() => {
+							element.style.opacity = '1';
+						}, 100);
+					}
+				});
+			}, 2000);
+			
+			// Cursor blink animation
+			setInterval(() => {
+				const blinkElements = document.querySelectorAll('.blink');
+				blinkElements.forEach(element => {
+					element.style.visibility = (element.style.visibility === 'hidden') ? 'visible' : 'hidden';
+				});
+			}, 530);
+			
+			// Randomly trigger glitch effects on elements
+			setInterval(() => {
+				const allElements = document.querySelectorAll('.cyberpunk-button, .cyberpunk-logo, .cyberpunk-subtitle');
+				const randomElement = allElements[Math.floor(Math.random() * allElements.length)];
+				
+				if (randomElement) {
+					randomElement.classList.add('glitch-trigger');
+					setTimeout(() => {
+						randomElement.classList.remove('glitch-trigger');
+					}, 200);
+				}
+			}, 5000);
+		});
+	</script>
+</body>
+</html>
